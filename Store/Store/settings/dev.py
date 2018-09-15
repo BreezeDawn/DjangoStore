@@ -149,3 +149,68 @@ CACHES = {
 SESSION_ENGINE = "django.contrib.sessions.backends.cache"
 # 使用名为'session'的redis配置
 SESSION_CACHE_ALIAS = "session"
+
+LOGGING = {
+    # 保留字段
+    'version': 1,
+
+    # 是否禁用已经存在的日志器
+    'disable_existing_loggers': False,
+
+    # 日志信息显示的格式
+    'formatters': {
+        # 标准版
+        'standard': {
+            'format': '[%(asctime)s][%(threadName)s:%(thread)d][task_id:%(name)s]'
+                      '[%(filename)s:%(lineno)d][%(levelname)s][%(message)s]'
+        },
+        # 冗长版
+        'verbose': {
+            'format': '%(levelname)s %(asctime)s %(module)s %(lineno)d %(message)s'
+        },
+        # 简单版
+        'simple': {
+            'format': '%(levelname)s %(module)s %(lineno)d %(message)s'
+        },
+    },
+
+    # 对日志进行过滤
+    'filters': {
+        'require_debug_true': {  # django在debug模式下才输出日志
+            '()': 'django.utils.log.RequireDebugTrue',
+        },
+    },
+
+    # 日志流的处理方法
+    'handlers': {
+
+        # 把日志打印到终端
+        'console': {
+            'level': 'INFO',
+            'filters': ['require_debug_true'],
+            'class': 'logging.StreamHandler',
+            'formatter': 'simple'
+        },
+
+        # 向文件中输出日志
+        'file': {
+            'level': 'INFO',
+            'class': 'logging.handlers.RotatingFileHandler',
+            'filename': os.path.join(os.path.dirname(BASE_DIR), "logs/store.log"),  # 日志文件的位置
+            'maxBytes': 300 * 1024 * 1024,
+            'backupCount': 10,
+            'formatter': 'verbose'
+        },
+
+    },
+
+    # 日志器
+    'loggers': {
+        'django': {  # 定义了一个名为django的日志器
+            'handlers': ['console', 'file'],  # 可以同时向终端与文件中输出日志
+            'propagate': True,  # 是否继续传递日志信息
+            'level': 'INFO',  # 日志器接收的最低日志级别
+        },
+    },
+
+}

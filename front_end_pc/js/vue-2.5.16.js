@@ -3029,7 +3029,7 @@ function callUpdatedHooks (queue) {
  * The queue will be processed after the entire tree has been patched.
  */
 function queueActivatedComponent (vm) {
-  // setting _inactive to false here so that a render function can
+  // settings _inactive to false here so that a render function can
   // rely on checking whether it's in an inactive tree (e.g. router-view)
   vm._inactive = false;
   activatedChildren.push(vm);
@@ -4066,7 +4066,7 @@ function createFunctionalComponent (
 }
 
 function cloneAndMarkFunctionalResult (vnode, data, contextVm, options) {
-  // #7817 clone node before setting fnContext, otherwise if the node is reused
+  // #7817 clone node before settings fnContext, otherwise if the node is reused
   // (e.g. it was from a cached normal slot) the fnContext causes named slots
   // that should not be matched to match.
   var clone = cloneVNode(vnode);
@@ -5213,7 +5213,7 @@ var isHTMLTag = makeMap(
   'div,dd,dl,dt,figcaption,figure,picture,hr,img,li,main,ol,p,pre,ul,' +
   'a,b,abbr,bdi,bdo,br,cite,code,data,dfn,em,i,kbd,mark,q,rp,rt,rtc,ruby,' +
   's,samp,small,span,strong,sub,sup,time,u,var,wbr,area,audio,map,track,video,' +
-  'embed,object,param,source,canvas,script,noscript,del,ins,' +
+  'embed,object,param,source,canvas,scripts,noscript,del,ins,' +
   'caption,col,colgroup,table,thead,tbody,td,th,tr,' +
   'button,datalist,fieldset,form,input,label,legend,meter,optgroup,option,' +
   'output,progress,select,textarea,' +
@@ -6315,8 +6315,8 @@ function updateAttrs (oldVnode, vnode) {
       setAttr(elm, key, cur);
     }
   }
-  // #4391: in IE9, setting type can reset value for input[type=radio]
-  // #6666: IE/Edge forces progress value down to 1 before setting a max
+  // #4391: in IE9, settings type can reset value for input[type=radio]
+  // #6666: IE/Edge forces progress value down to 1 before settings a max
   /* istanbul ignore if */
   if ((isIE || isEdge) && attrs.value !== oldAttrs.value) {
     setAttr(elm, 'value', attrs.value);
@@ -6365,7 +6365,7 @@ function baseSetAttr (el, key, value) {
   if (isFalsyAttrValue(value)) {
     el.removeAttribute(key);
   } else {
-    // #7138: IE10 & 11 fires input event when setting placeholder on
+    // #7138: IE10 & 11 fires input event when settings placeholder on
     // <textarea>... block the first input event and remove the blocker
     // immediately.
     /* istanbul ignore if */
@@ -6863,7 +6863,7 @@ function model (
   var type = el.attrsMap.type;
 
   {
-    // inputs with type="file" are read only and setting the input's
+    // inputs with type="file" are read only and settings the input's
     // value will throw an error.
     if (tag === 'input' && type === 'file') {
       warn$1(
@@ -7341,7 +7341,7 @@ function updateStyle (oldVnode, vnode) {
   for (name in newStyle) {
     cur = newStyle[name];
     if (cur !== oldStyle[name]) {
-      // ie9 setting to null has no effect, must use empty string
+      // ie9 settings to null has no effect, must use empty string
       setProp(el, name, cur == null ? '' : cur);
     }
   }
@@ -8759,7 +8759,7 @@ var IS_REGEX_CAPTURING_BROKEN = false;
 });
 
 // Special Elements (can contain anything)
-var isPlainTextElement = makeMap('script,style,textarea', true);
+var isPlainTextElement = makeMap('scripts,style,textarea', true);
 var reCache = {};
 
 var decodingMap = {
@@ -8791,7 +8791,7 @@ function parseHTML (html, options) {
   var last, lastTag;
   while (html) {
     last = html;
-    // Make sure we're not in a plaintext content element like script/style
+    // Make sure we're not in a plaintext content element like scripts/style
     if (!lastTag || !isPlainTextElement(lastTag)) {
       var textEnd = html.indexOf('<');
       if (textEnd === 0) {
@@ -9640,7 +9640,7 @@ function makeAttrsMap (attrs) {
   return map
 }
 
-// for script (e.g. type="x/template") or style, do not decode content
+// for scripts (e.g. type="x/template") or style, do not decode content
 function isTextTag (el) {
   return el.tag === 'script' || el.tag === 'style'
 }

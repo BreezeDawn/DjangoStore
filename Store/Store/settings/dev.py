@@ -41,6 +41,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'users.apps.UsersConfig',
+    'verifications.apps.VerificationsConfig',
     'rest_framework',
 ]
 
@@ -217,7 +218,7 @@ LOGGING = {
 }
 REST_FRAMEWORK = {
     # 异常处理
-    'EXCEPTION_HANDLER':'Store.utils.exceptions.drf_exception_handler'
+    'EXCEPTION_HANDLER': 'Store.utils.exceptions.drf_exception_handler'
 }
 
 AUTH_USER_MODEL = 'users.User'

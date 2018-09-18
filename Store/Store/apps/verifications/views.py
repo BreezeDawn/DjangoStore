@@ -37,10 +37,14 @@ class SMSCodeView(APIView):
 
         # 1.1随机生成6位数字
         sms_code = "%06d" % random.randint(0, 999999)
-        # 1.2.1在redis保存短信验证码内容, key = mobile, value = 短信验证码
-        redis_conn.setex('sms_%s' % mobile,SMS_CODE_REDIS_EXPIRES,sms_code)
-        # 1.2.2在redis设置短信验证码频繁发送时间
-        redis_conn.setex('sms_flag_%s' % mobile,SMS_CODE_REDIS_TIMES,1)
+
+        # 1.2在redis保存短信验证码内容,并设置短信验证码频繁发送时间
+        # -- key = mobile, value = 短信验证码
+        pl = redis_conn.pipeline()
+        pl.setex('sms_%s' % mobile,SMS_CODE_REDIS_EXPIRES,sms_code)
+        pl.setex('sms_flag_%s' % mobile,SMS_CODE_REDIS_TIMES,1)
+        pl.execute()
+
         # 1.3使用第三7方平台发送短信
         expires = SMS_CODE_REDIS_EXPIRES//60
         try:

@@ -144,7 +144,14 @@ CACHES = {
         "OPTIONS": {
             "CLIENT_CLASS": "django_redis.client.default.DefaultClient"
         }
-    }
+    },
+    "verify_codes": {
+        "BACKEND": "django_redis.cache.RedisCache",
+        "LOCATION": "redis://127.0.0.1:6379/2",
+        "OPTIONS": {
+            "CLIENT_CLASS": "django_redis.client.default.DefaultClient"
+        }
+    },
 }
 
 # 设置session用缓存保存,而上面设置缓存用redis保存,所以session的缓存保存在了redis中

@@ -29,7 +29,8 @@ SECRET_KEY = '8vc0jpqnif6b7rere*2v+c#sj$00+x1w3m3#j8mw5foq(sbc&0'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+# 允许访问的host
+ALLOWED_HOSTS = ['127.0.0.1']
 
 # Application definition
 

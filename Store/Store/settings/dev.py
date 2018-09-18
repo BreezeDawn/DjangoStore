@@ -44,6 +44,7 @@ INSTALLED_APPS = [
     'users.apps.UsersConfig',
     'verifications.apps.VerificationsConfig',
     'rest_framework',
+    'corsheaders'
 ]
 
 MIDDLEWARE = [
@@ -54,6 +55,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'corsheaders.middleware.CorsMiddleware'
 ]
 
 # 如果修改目录名,该配置需要被修改
@@ -224,9 +226,17 @@ LOGGING = {
     },
 
 }
+
 REST_FRAMEWORK = {
     # 异常处理
     'EXCEPTION_HANDLER': 'Store.utils.exceptions.drf_exception_handler'
 }
 
+# 指明用户模型
 AUTH_USER_MODEL = 'users.User'
+
+# CORS跨域请求(只针对异步请求如ajax) 白名单 允许携带cookie
+CORS_ORIGIN_WHITELIST = (
+    '127.0.0.1:8080'
+)
+CORS_ALLOW_CREDENTIALS = True

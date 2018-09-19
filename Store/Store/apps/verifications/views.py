@@ -8,6 +8,7 @@ from rest_framework.views import APIView
 from django_redis import get_redis_connection
 
 from Store.libs.yuntongxun.sms import CCP
+from celery_tasks.sms.tasks import send_sms_code
 from verifications.contants import SMS_CODE_REDIS_EXPIRES, SMS_CODE_REDIS_TIMES, SMS_CODE_TEMP_ID
 
 # 获取日志器
@@ -46,14 +47,11 @@ class SMSCodeView(APIView):
         pl.setex('sms_flag_%s' % mobile, SMS_CODE_REDIS_TIMES, 1)
         pl.execute()
 
+        # 短信验证码过期时间
+        expires = SMS_CODE_REDIS_EXPIRES // 60
+
         # 1.3使用第三7方平台发送短信
-        # expires = SMS_CODE_REDIS_EXPIRES//60
-        # try:
-        #     res_code = CCP().send_template_sms(mobile, [sms_code, expires], SMS_CODE_TEMP_ID)
-        # except BaseException as e:
-        #     logger.error(e)
-        #     return Response({"message": "短信发送异常"}, status=status.HTTP_503_SERVICE_UNAVAILABLE)
-        # if res_code:
-        #     return Response({"message": "短信发送失败"}, status=status.HTTP_503_SERVICE_UNAVAILABLE)
+        send_sms_code.delay(mobile,sms_code,expires)
+
         logger.info("短信验证码:%s" % sms_code)
         return Response({"message": "短信发送成功"}, status=status.HTTP_200_OK)

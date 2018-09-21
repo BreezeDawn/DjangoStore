@@ -31,7 +31,14 @@ var vm = new Vue({
                 this.error_name_message = '请输入5-20个字符的用户名';
                 this.error_name = true;
             } else {
-                this.error_name = false;
+                reg = /^\D.*/;
+                if (reg.test(this.username)) {
+                    this.error_name = false;
+                } else {
+                    this.error_name_message = '请以非数字开头';
+                    this.error_name = true;
+                }
+
             }
             // 检查重名
             if (this.error_name == false) {
@@ -109,6 +116,11 @@ var vm = new Vue({
         },
         // 发送手机短信验证码
         send_sms_code: function(){
+            if (this.error_phone == true) {
+                this.sending_flag = false;
+                return;
+            }
+
             if (this.sending_flag == true) {
                 return;
             }
@@ -117,10 +129,7 @@ var vm = new Vue({
             // 校验参数，保证输入框有数据填写
             this.check_phone();
 
-            if (this.error_phone == true) {
-                this.sending_flag = false;
-                return;
-            }
+
             // 向后端接口发送请求，让后端发送短信验证码
             axios.get(this.host + '/sms_codes/' + this.mobile + '/', {
                     responseType: 'json'
@@ -155,7 +164,7 @@ var vm = new Vue({
                     this.sending_flag = false;
                 })
         },
-        // 注册
+         // 注册
         on_submit: function(){
             this.check_username();
             this.check_pwd();
@@ -164,6 +173,34 @@ var vm = new Vue({
             this.check_sms_code();
             this.check_allow();
 
+            if(this.error_name == false && this.error_password == false && this.error_check_password == false
+                && this.error_phone == false && this.error_sms_code == false && this.error_allow == false) {
+                axios.post(this.host + '/users/', {
+                        username: this.username,
+                        password: this.password,
+                        password2: this.password2,
+                        mobile: this.mobile,
+                        sms_code: this.sms_code,
+                        allow: this.allow.toString()
+                    }, {
+                        responseType: 'json'
+                    })
+                    .then(response => {
+                        location.href = '/index.html';
+                    })
+                    .catch(error=> {
+                        if (error.response.status == 400) {
+                            if ('non_field_errors' in error.response.data) {
+                                this.error_sms_code_message = error.response.data.non_field_errors[0];
+                            } else {
+                                this.error_sms_code_message = '数据有误';
+                            }
+                            this.error_sms_code = true;
+                        } else {
+                            console.log(error.response.data);
+                        }
+                    })
+            }
         }
     }
 });

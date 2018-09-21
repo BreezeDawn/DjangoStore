@@ -141,6 +141,7 @@ CACHES = {
             "CLIENT_CLASS": "django_redis.client.default.DefaultClient"
         }
     },
+    # 存放session
     "session": {
         "BACKEND": "django_redis.cache.RedisCache",
         "LOCATION": "redis://127.0.0.1:6379/1",
@@ -148,6 +149,7 @@ CACHES = {
             "CLIENT_CLASS": "django_redis.client.default.DefaultClient"
         }
     },
+    # 存放短信验证码
     "verify_codes": {
         "BACKEND": "django_redis.cache.RedisCache",
         "LOCATION": "redis://127.0.0.1:6379/2",

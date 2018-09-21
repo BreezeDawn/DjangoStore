@@ -37,17 +37,6 @@ class MobilesCountView(APIView):
         return Response(data)
 
 
-class UsersRegisterView(GenericAPIView):
+class UsersRegisterView(CreateAPIView):
     # 指明所用序列化器
     serializer_class = CreateUserSerializer
-
-    def post(self,request):
-        # 收到的用户数据传入序列化器
-        serializer = self.get_serializer(data=request.data) # type:Serializer
-        # 进行校验
-        serializer.is_valid(raise_exception=True)
-        # 进行创建用户
-        serializer.save()
-
-        return Response(serializer.data,status=status.HTTP_201_CREATED)
-

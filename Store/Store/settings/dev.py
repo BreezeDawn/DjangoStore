@@ -9,7 +9,7 @@ https://docs.djangoproject.com/en/1.11/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/1.11/ref/settings/
 """
-
+import datetime
 import os
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
@@ -127,10 +127,12 @@ USE_L10N = True
 
 USE_TZ = True
 
+
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/1.11/howto/static-files/
 
 STATIC_URL = '/static/'
+
 
 # 设置缓存存入redis
 CACHES = {
@@ -159,10 +161,12 @@ CACHES = {
     },
 }
 
+
 # 设置session用缓存保存,而上面设置缓存用redis保存,所以session的缓存保存在了redis中
 SESSION_ENGINE = "django.contrib.sessions.backends.cache"
 # 使用名为'session'的redis配置
 SESSION_CACHE_ALIAS = "session"
+
 
 LOGGING = {
     # 保留字段
@@ -218,6 +222,7 @@ LOGGING = {
 
     },
 
+
     # 日志器
     'loggers': {
         'django': {  # 定义了一个名为django的日志器
@@ -229,16 +234,37 @@ LOGGING = {
 
 }
 
+
 REST_FRAMEWORK = {
     # 异常处理
-    'EXCEPTION_HANDLER': 'Store.utils.exceptions.drf_exception_handler'
+    'EXCEPTION_HANDLER': 'Store.utils.exceptions.drf_exception_handler',
+    # 设置认证方案
+    'DEFAULT_AUTHENTICATION_CLASSES': (
+        # JWT认证:json_web_token认证
+        'rest_framework_jwt.authentication.JSONWebTokenAuthentication',
+        # Session:session_id认证
+        'rest_framework.authentication.SessionAuthentication',
+        # Basic:账号密码验证
+        'rest_framework.authentication.BasicAuthentication',
+    ),
 }
+
 
 # 指明用户模型
 AUTH_USER_MODEL = 'users.User'
 
-# CORS跨域请求(只针对异步请求如ajax) 白名单 允许携带cookie
+
+# CORS跨域请求(只针对异步请求如ajax)
+# CORS白名单
 CORS_ORIGIN_WHITELIST = (
     '127.0.0.1:8080'
 )
+# CORS允许携带cookie访问
 CORS_ALLOW_CREDENTIALS = True
+
+
+# JWT扩展设置
+JWT_AUTH = {
+    # 设置生成jwt-token数据时,token数据的有效时间
+    'JWT_EXPIRATION_DELTA': datetime.timedelta(days=1),
+}

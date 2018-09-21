@@ -267,4 +267,7 @@ CORS_ALLOW_CREDENTIALS = True
 JWT_AUTH = {
     # 设置生成jwt-token数据时,token数据的有效时间
     'JWT_EXPIRATION_DELTA': datetime.timedelta(days=1),
+    # 修改JWT登录视图返回值调用的函数,自定义相应函数
+    'JWT_RESPONSE_PAYLOAD_HANDLER':
+        'users.utils.jwt_response_payload_handler',
 }

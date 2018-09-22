@@ -30,7 +30,7 @@ SECRET_KEY = '8vc0jpqnif6b7rere*2v+c#sj$00+x1w3m3#j8mw5foq(sbc&0'
 DEBUG = True
 
 # 允许访问的host
-ALLOWED_HOSTS = ['127.0.0.1']
+ALLOWED_HOSTS = ['127.0.0.1','www.xingtu.info']
 
 # Application definition
 
@@ -258,7 +258,8 @@ AUTH_USER_MODEL = 'users.User'
 # CORS跨域请求(只针对异步请求如ajax)
 # CORS白名单
 CORS_ORIGIN_WHITELIST = (
-    '127.0.0.1:8080'
+    '127.0.0.1:8080',
+    'www.xingtu.info:8080'
 )
 # CORS允许携带cookie访问
 CORS_ALLOW_CREDENTIALS = True

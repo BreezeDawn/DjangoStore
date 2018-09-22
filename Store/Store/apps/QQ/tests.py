@@ -1,6 +1,20 @@
 
 # Create your tests here.
 
+# if __name__ == '__main__':
+    # from itsdangerous import TimedJSONWebSignatureSerializer
+    # secret_key 密匙 expires_in 有效期内解密
+    # TJWSS = TimedJSONWebSignatureSerializer(secret_key='123123',expires_in=3600)
+    # Json = {
+    #     'openid':'123123123123'
+    # }
+    # 加密并返回加密后的数据
+    # print(TJWSS.dumps(Json))
+    # 解密并返回解密后的数据
+    # print(TJWSS.loads(TJWSS.dumps(Json)))
+
+
+
 # if __name__ == "__main__":
 #     # urlopen: 发送网络请求
 #     from urllib.request import urlopen

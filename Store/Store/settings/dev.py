@@ -276,3 +276,9 @@ JWT_AUTH = {
 AUTHENTICATION_BACKENDS = [
         "users.utils.UsernameMobileModelBackend",
 ]
+
+# QQ登录开发设置
+QQ_CLIENT_ID = '101506696'  # APP ID
+QQ_CLIENT_SECRET = 'd0f9607350d01325b20e40b594a5314a'   # APP Key
+QQ_REDIRECT_URI = 'http://www.xingtu.info:8080/qq-callback'  # 网站回调地址
+QQ_STATE = '/'  # QQ成功登录之后跳转页面地址

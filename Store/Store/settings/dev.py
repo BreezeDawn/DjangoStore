@@ -259,7 +259,7 @@ AUTH_USER_MODEL = 'users.User'
 # CORS白名单
 CORS_ORIGIN_WHITELIST = (
     '127.0.0.1:8080',
-    'www.xingtu.info:8080'
+    'www.xingtu.info:8080',
 )
 # CORS允许携带cookie访问
 CORS_ALLOW_CREDENTIALS = True
@@ -279,7 +279,7 @@ AUTHENTICATION_BACKENDS = [
 ]
 
 # QQ登录开发设置
-QQ_CLIENT_ID = '101506696'  # APP ID
-QQ_CLIENT_SECRET = 'd0f9607350d01325b20e40b594a5314a'   # APP Key
-QQ_REDIRECT_URI = 'http://www.xingtu.info:8080/qq-callback'  # 网站回调地址
+QQ_CLIENT_ID = '101507886'  # APP ID
+QQ_CLIENT_SECRET = '9c9915eb20bd631bdf11b528360cdc28'   # APP Key
+QQ_REDIRECT_URI = 'http://www.xingtu.info:8080/qq-callback.html'  # 网站回调地址
 QQ_STATE = '/'  # QQ成功登录之后跳转页面地址

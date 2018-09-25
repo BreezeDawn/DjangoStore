@@ -284,13 +284,14 @@ QQ_CLIENT_SECRET = '9c9915eb20bd631bdf11b528360cdc28'   # APP Key
 QQ_REDIRECT_URI = 'http://www.xingtu.info:8080/qq-callback.html'  # 网站回调地址
 QQ_STATE = '/'  # QQ成功登录之后跳转页面地址
 
-# 邮箱验证
+# QQ邮箱验证
+EMAIL_USE_SSL = True
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
-EMAIL_HOST = 'pop.qq.com'
-EMAIL_PORT = 25
+EMAIL_HOST = 'smtp.qq.com'
+EMAIL_PORT = 465
 #发送邮件的邮箱
-EMAIL_HOST_USER = 'mmmynnn@outlook.com'
+EMAIL_HOST_USER = '137899401@qq.com'
 #在邮箱中设置的客户端授权密码
 EMAIL_HOST_PASSWORD = 'zqrbzfkacqugbibh'
 #收件人看到的发件人
-EMAIL_FROM = 'Store<mmmynnn@outlook.com>'
+EMAIL_FROM = EMAIL_HOST_USER

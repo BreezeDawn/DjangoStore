@@ -2,7 +2,8 @@ import re
 
 from django_redis import get_redis_connection
 from rest_framework import serializers
-
+from django.core.mail import send_mail
+from django.conf import settings
 from users.models import User
 
 
@@ -18,8 +19,17 @@ class EmailSerializer(serializers.ModelSerializer):
         # 更新用户邮箱地址
         instance.email = email
         instance.save
-        # 发送验证邮箱
 
+        # 生成邮箱链接地址
+        verify_url = instance.verify_email_url()
+
+        # 发送邮件
+        subject = "Story邮箱验证"
+        html_message = '<p>尊敬的用户您好！</p>' \
+                       '<p>感谢您使用Story。</p>' \
+                       '<p>您的邮箱为：%s 。请点击此链接激活您的邮箱：</p>' \
+                       '<p><a href="%s">%s<a></p>' % (email, verify_url, verify_url)
+        send_mail(subject, "", settings.EMAIL_FROM, [email], html_message=html_message)
         return instance
 
 

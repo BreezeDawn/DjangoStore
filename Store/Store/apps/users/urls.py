@@ -16,5 +16,7 @@ urlpatterns = [
     url(r'^mobiles/(?P<mobile>.*)/count/$', views.MobilesCountView.as_view()),
     # 获取用户信息
     url(r'^user/$', views.UserDetailView.as_view()),
+    # 修改邮箱
+    url(r'^email/$', views.EmailView.as_view()),
 
 ]

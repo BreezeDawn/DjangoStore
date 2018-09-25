@@ -6,6 +6,23 @@ from rest_framework import serializers
 from users.models import User
 
 
+class EmailSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = User
+        fields = ['id','email']
+
+    def update(self, instance, validated_data):
+        # 获取邮箱地址
+        email = validated_data['email']
+        # 更新用户邮箱地址
+        instance.email = email
+        instance.save
+        # 发送验证邮箱
+
+        return instance
+
+
 class UserDetailSerializer(serializers.ModelSerializer):
 
     class Meta:

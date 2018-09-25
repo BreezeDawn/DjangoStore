@@ -2,11 +2,13 @@
 from urllib import parse
 
 from rest_framework import status
+from rest_framework.generics import GenericAPIView
 from rest_framework.response import Response
 from rest_framework.views import APIView
 
 from QQ.exceptions import QQAPIError
 from QQ.models import AuthModel
+from QQ.serializers import BindUserSerializer
 from QQ.utils import OAuthQQ
 
 
@@ -16,21 +18,37 @@ class QQTestView(APIView):
     def get(self, request):
         return Response({"api": 'QQ'}, status=status.HTTP_200_OK)
 
+
 class QQLoginView(APIView):
-    def get(self,request):
+    def get(self, request):
         # 获取地址中的next参数
-        next = request.query_params.get('next','/')
+        next = request.query_params.get('next', '/')
         # 组织登录QQ的url和参数
         QQ = OAuthQQ(state=next)
         url = QQ.get_login_url()
-        return Response({'login_url':url})
+        return Response({'login_url': url})
 
-class QQCallBackView(APIView):
-    def get(self,request):
+
+class QQCallBackView(GenericAPIView):
+    serializer_class = BindUserSerializer
+
+    def post(self, request):
+        # 绑定用户表单提交
+
+        # 反序列化
+        serializer = self.get_serializer(data=request.data)
+        # 校验数据
+        serializer.is_valid(raise_exception=True)
+        # 绑定QQ
+        serializer.save()
+
+        return Response(serializer.data, status=status.HTTP_201_CREATED)
+
+    def get(self, request):
         # 1.获取code并进行校验
         code = request.query_params.get('code')
         if code is None:
-            return Response({'message':'缺少code参数'},status=status.HTTP_400_BAD_REQUEST)
+            return Response({'message': '缺少code参数'}, status=status.HTTP_400_BAD_REQUEST)
         # 2.获取QQ登录用户的openid
         QQ = OAuthQQ()
         try:
@@ -39,7 +57,7 @@ class QQCallBackView(APIView):
             # 根据access_token请求QQ服务器获取openid
             openid = QQ.get_openid(token)
         except QQAPIError:
-            return Response({'message':'QQ登录异常'},status=status.HTTP_503_SERVICE_UNAVAILABLE)
+            return Response({'message': 'QQ登录异常'}, status=status.HTTP_503_SERVICE_UNAVAILABLE)
 
         # 3.根据openid进行处理
         try:
@@ -47,7 +65,7 @@ class QQCallBackView(APIView):
         except AuthModel.DoesNotExist:
             # 用户第一次使用QQ登录,绑定用户界面
             openid_token = QQ.generate_save_user_token(openid)
-            return Response({'openid_token':openid_token})
+            return Response({'openid_token': openid_token})
         else:
             # 之前使用过QQ登录,签发jwt token 并返回
             user = qq_user.user  # 使用外键得到用户
@@ -65,9 +83,8 @@ class QQCallBackView(APIView):
 
             # 返回响应
             resp_data = {
-                'user_id':user.id,
-                'username':user.usernamem,
-                'token':token
+                'user_id': user.id,
+                'username': user.username,
+                'token': token
             }
             return Response(resp_data)
-

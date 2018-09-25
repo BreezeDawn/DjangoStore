@@ -88,9 +88,9 @@ WSGI_APPLICATION = 'Store.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'HOST': '127.0.0.1',
+        'HOST': '192.168.9.129',
         'PORT': 3306,
-        'USER': 'root',
+        'USER': 'maimai',
         'PASSWORD': 'xiaodianchi',
         'NAME': 'Store'
     }
@@ -139,7 +139,7 @@ STATIC_URL = '/static/'
 CACHES = {
     "default": {
         "BACKEND": "django_redis.cache.RedisCache",
-        "LOCATION": "redis://127.0.0.1:6379/0",
+        "LOCATION": "redis://192.168.9.129:6379/0",
         "OPTIONS": {
             "CLIENT_CLASS": "django_redis.client.default.DefaultClient"
         }
@@ -147,7 +147,7 @@ CACHES = {
     # 存放session
     "session": {
         "BACKEND": "django_redis.cache.RedisCache",
-        "LOCATION": "redis://127.0.0.1:6379/1",
+        "LOCATION": "redis://192.168.9.129:6379/1",
         "OPTIONS": {
             "CLIENT_CLASS": "django_redis.client.default.DefaultClient"
         }
@@ -155,7 +155,7 @@ CACHES = {
     # 存放短信验证码
     "verify_codes": {
         "BACKEND": "django_redis.cache.RedisCache",
-        "LOCATION": "redis://127.0.0.1:6379/2",
+        "LOCATION": "redis://192.168.9.129:6379/2",
         "OPTIONS": {
             "CLIENT_CLASS": "django_redis.client.default.DefaultClient"
         }

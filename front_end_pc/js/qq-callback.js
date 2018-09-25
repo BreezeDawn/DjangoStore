@@ -36,7 +36,7 @@ var vm = new Vue({
                     location.href = state;
                 } else {
                     // 用户未绑定
-                    this.access_token = response.data.openid_token;
+                    this.openid_token = response.data.openid_token;
                     this.is_show_waiting = false;
                 }
             })
@@ -129,12 +129,39 @@ var vm = new Vue({
                     this.sending_flag = false;
                 })
         },
-        // 保存
+         // 保存
         on_submit: function(){
             this.check_pwd();
             this.check_phone();
             this.check_sms_code();
 
+            if(this.error_password == false && this.error_phone == false && this.error_sms_code == false) {
+                axios.post(this.host + '/qq/user/', {
+                        password: this.password,
+                        mobile: this.mobile,
+                        sms_code: this.sms_code,
+                        openid_token: this.openid_token
+                    }, {
+                        responseType: 'json',
+                    })
+                    .then(response => {
+                        // 记录用户登录状态
+                        sessionStorage.clear();
+                        localStorage.clear();
+                        localStorage.token = response.data.token;
+                        localStorage.user_id = response.data.id;
+                        localStorage.username = response.data.username;
+                        location.href = this.get_query_string('state');
+                    })
+                    .catch(error=> {
+                        if (error.response.status == 400) {
+                            this.error_sms_code_message = error.response.data.message;
+                            this.error_sms_code = true;
+                        } else {
+                            console.log(error.response.data);
+                        }
+                    })
+            }
         }
     }
 });

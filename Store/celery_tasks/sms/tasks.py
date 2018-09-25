@@ -19,3 +19,5 @@ def send_sms_code(mobile, sms_code, expires):
             logger.error('[celery]第三方发送短信失败 --> [mobile: %s]-[验证码: %s]' % (mobile, sms_code))
         else:
             logger.info('[celery]第三方发送短信成功 --> [mobile: %s]-[验证码: %s]' % (mobile, sms_code))
+
+

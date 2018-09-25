@@ -7,5 +7,5 @@ celery_app = Celery("celery")
 celery_app.config_from_object("celery_tasks.config")
 
 # 启动worker自动发现任务,路径以.分隔,自动寻找目录下的tasks文件中的装饰器对象
-celery_app.autodiscover_tasks(['celery_tasks.sms'])
+celery_app.autodiscover_tasks(['celery_tasks.sms','celery_tasks.email'])
 

@@ -14,4 +14,7 @@ urlpatterns = [
     url(r'^usernames/(?P<username>.*)/count/$', views.UsersCountView.as_view()),
     # 手机号数量查询视图
     url(r'^mobiles/(?P<mobile>.*)/count/$', views.MobilesCountView.as_view()),
+    # 获取用户信息
+    url(r'^user/$', views.UserDetailView.as_view()),
+
 ]

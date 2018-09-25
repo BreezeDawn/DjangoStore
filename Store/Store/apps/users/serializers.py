@@ -6,6 +6,13 @@ from rest_framework import serializers
 from users.models import User
 
 
+class UserDetailSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = User
+        fields = ['id','username','mobile','email','email_active']
+
+
 class CreateUserSerializer(serializers.ModelSerializer):
     """用户序列化器"""
 

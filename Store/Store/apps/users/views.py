@@ -1,6 +1,6 @@
 # Create your views here.
 from rest_framework import status
-from rest_framework.generics import CreateAPIView, GenericAPIView, RetrieveAPIView
+from rest_framework.generics import CreateAPIView, GenericAPIView, RetrieveAPIView, UpdateAPIView
 from rest_framework.response import Response
 from rest_framework.views import APIView
 from rest_framework.permissions import IsAuthenticated
@@ -16,26 +16,13 @@ class UsersTestView(APIView):
         return Response({"api": 'users'}, status=status.HTTP_200_OK)
 
 
-class EmailView(GenericAPIView):
+class EmailView(UpdateAPIView):
     permission_classes = [IsAuthenticated]
     serializer_class = EmailSerializer
 
     def get_object(self):
         return self.request.user
 
-    def put(self,request):
-        # 获取用户
-        user = self.get_object()
-
-        # 获取email并进行校验邮箱格式
-        serializer = self.get_serializer(user,data=request.data)
-        serializer.is_valid(raise_exception=True)
-
-        # 设置email
-        serializer.save()
-
-        # 返回应答
-        return Response(serializer.data)
 
 
 class UserDetailView(RetrieveAPIView):

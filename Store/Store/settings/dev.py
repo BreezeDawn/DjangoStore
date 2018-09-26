@@ -44,6 +44,7 @@ INSTALLED_APPS = [
     'users.apps.UsersConfig',
     'QQ.apps.QqConfig',
     'verifications.apps.VerificationsConfig',
+    'areas.apps.AreasConfig',
     'rest_framework',
     'corsheaders'
 ]

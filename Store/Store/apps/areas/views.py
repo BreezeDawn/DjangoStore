@@ -2,7 +2,7 @@ from django.shortcuts import render
 
 # Create your views here.
 from rest_framework import status
-from rest_framework.generics import ListAPIView, GenericAPIView
+from rest_framework.generics import ListAPIView, GenericAPIView, RetrieveAPIView
 from rest_framework.response import Response
 from rest_framework.views import APIView
 
@@ -23,12 +23,7 @@ class ProvincesView(ListAPIView):
     serializer_class = AreaSerializer
 
 
-class CityView(GenericAPIView):
+class CityView(RetrieveAPIView):
     """市级接口"""
-
+    queryset = Area.objects.all()
     serializer_class = SubAreaSerializer
-
-    def get(self,request,city_id):
-        citys = Area.objects.get(id=city_id)
-        serializer = self.get_serializer(citys)
-        return Response(serializer.data)

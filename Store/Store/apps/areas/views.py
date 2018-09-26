@@ -7,7 +7,7 @@ from rest_framework.response import Response
 from rest_framework.views import APIView
 
 from areas.models import Area
-from areas.serializers import AreaSerializer
+from areas.serializers import AreaSerializer,SubAreaSerializer
 
 
 class AreasTestView(APIView):
@@ -23,3 +23,12 @@ class ProvincesView(ListAPIView):
     serializer_class = AreaSerializer
 
 
+class CityView(GenericAPIView):
+    """市级接口"""
+
+    serializer_class = SubAreaSerializer
+
+    def get(self,request,city_id):
+        citys = Area.objects.get(id=city_id)
+        serializer = self.get_serializer(citys)
+        return Response(serializer.data)

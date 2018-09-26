@@ -12,4 +12,10 @@ class AreaSerializer(serializers.ModelSerializer):
         # 需要序列化/反序列化哪些字段
         fields = ('id','name')
 
+class SubAreaSerializer(serializers.ModelSerializer):
+    """用户序列化器"""
+    subs = AreaSerializer(many=True, read_only=True)
 
+    class Meta:
+        model = Area
+        fields = ('id', 'name', 'subs')

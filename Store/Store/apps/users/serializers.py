@@ -19,13 +19,20 @@ class EmailSerializer(serializers.ModelSerializer):
         email = validated_data['email']
         # 更新用户邮箱地址
         instance.email = email
-        instance.save
+        instance.save()
 
         # 生成邮箱链接地址
         verify_url = instance.verify_email_url()
 
         # 发送邮件
-        send_verify_email.delay(email,verify_url)
+        # send_verify_email.delay(email,verify_url)
+        subject = "Story邮箱验证"
+        html_message = '<p>尊敬的用户您好！</p>' \
+                       '<p>感谢您使用Story。</p>' \
+                       '<p>您的邮箱为：%s 。请点击此链接激活您的邮箱：</p>' \
+                       '<p><a href="%s">%s<a></p>' % (email, verify_url, verify_url)
+        send_mail(subject, "", settings.EMAIL_FROM, [email], html_message=html_message)
+
         return instance
 
 

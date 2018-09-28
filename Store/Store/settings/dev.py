@@ -89,7 +89,7 @@ WSGI_APPLICATION = 'Store.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'HOST': '192.168.9.129',
+        'HOST': '192.168.128.128',
         'PORT': 3306,
         'USER': 'maimai',
         'PASSWORD': 'xiaodianchi',
@@ -140,7 +140,7 @@ STATIC_URL = '/static/'
 CACHES = {
     "default": {
         "BACKEND": "django_redis.cache.RedisCache",
-        "LOCATION": "redis://192.168.9.129:6379/0",
+        "LOCATION": "redis://192.168.128.128:6379/0",
         "OPTIONS": {
             "CLIENT_CLASS": "django_redis.client.default.DefaultClient"
         }
@@ -148,7 +148,7 @@ CACHES = {
     # 存放session
     "session": {
         "BACKEND": "django_redis.cache.RedisCache",
-        "LOCATION": "redis://192.168.9.129:6379/1",
+        "LOCATION": "redis://192.168.128.128:6379/1",
         "OPTIONS": {
             "CLIENT_CLASS": "django_redis.client.default.DefaultClient"
         }
@@ -156,7 +156,7 @@ CACHES = {
     # 存放短信验证码
     "verify_codes": {
         "BACKEND": "django_redis.cache.RedisCache",
-        "LOCATION": "redis://192.168.9.129:6379/2",
+        "LOCATION": "redis://192.168.128.128:6379/2",
         "OPTIONS": {
             "CLIENT_CLASS": "django_redis.client.default.DefaultClient"
         }
@@ -167,7 +167,7 @@ CACHES = {
     # 存放三级联动
     "areas": {
         "BACKEND": "django_redis.cache.RedisCache",
-        "LOCATION": "redis://192.168.9.129:6379/4",
+        "LOCATION": "redis://192.168.128.128:6379/4",
         "OPTIONS": {
             "CLIENT_CLASS": "django_redis.client.default.DefaultClient"
         }

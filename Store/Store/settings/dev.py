@@ -161,6 +161,17 @@ CACHES = {
             "CLIENT_CLASS": "django_redis.client.default.DefaultClient"
         }
     },
+
+    # 3号为celery中间人
+
+    # 存放三级联动
+    "areas": {
+        "BACKEND": "django_redis.cache.RedisCache",
+        "LOCATION": "redis://192.168.9.129:6379/4",
+        "OPTIONS": {
+            "CLIENT_CLASS": "django_redis.client.default.DefaultClient"
+        }
+    },
 }
 
 
@@ -240,6 +251,7 @@ LOGGING = {
 REST_FRAMEWORK = {
     # 异常处理
     'EXCEPTION_HANDLER': 'Store.utils.exceptions.drf_exception_handler',
+
     # 设置认证方案
     'DEFAULT_AUTHENTICATION_CLASSES': (
         # JWT认证:json_web_token认证
@@ -296,3 +308,13 @@ EMAIL_HOST_USER = '137899401@qq.com'
 EMAIL_HOST_PASSWORD = 'zqrbzfkacqugbibh'
 #收件人看到的发件人
 EMAIL_FROM = EMAIL_HOST_USER
+
+
+# DRF扩展
+REST_FRAMEWORK_EXTENSIONS = {
+    # 三级联动缓存
+    # 缓存时间
+    'DEFAULT_CACHE_RESPONSE_TIMEOUT': 60 * 60,
+    # 缓存存储
+    'DEFAULT_USE_CACHE': 'areas',
+}

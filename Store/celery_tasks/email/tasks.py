@@ -1,13 +1,13 @@
+from django.conf import settings
 from django.core.mail import send_mail
 
 from celery_tasks.main import celery_app
-from django.conf import settings
-
 
 
 @celery_app.task(name='send_verify_email')
 def send_verify_email(email,verify_url):
     print('发送邮件被调用')
+
     subject = "Story邮箱验证"
     html_message = '<p>尊敬的用户您好！</p>' \
                    '<p>感谢您使用Story。</p>' \

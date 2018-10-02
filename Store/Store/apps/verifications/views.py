@@ -51,7 +51,7 @@ class SMSCodeView(APIView):
         expires = SMS_CODE_REDIS_EXPIRES // 60
 
         # 1.3使用第三7方平台发送短信
-        # send_sms_code.delay(mobile,sms_code,expires)
+        send_sms_code.delay(mobile,sms_code,expires)
 
         logger.info("短信验证码:%s" % sms_code)
         return Response({"message": "短信发送成功"}, status=status.HTTP_200_OK)
